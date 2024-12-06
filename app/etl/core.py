@@ -45,13 +45,14 @@ def transform_select(data: pd.DataFrame, criteria: dict) -> pd.DataFrame:
             "["
         ) and x.endswith("]")
 
-        # Separate column names and numbers
-        column_numbers = [
-            int(column[1:-1]) for column in columns if is_column_number(column)
+        # get column names from column number
+        column_names = [
+            data.columns[int(column[1:-1])] if is_column_number(column) else column
+            for column in columns
         ]
-        column_names = [column for column in columns if not is_column_number(column)]
+
         # Select columns
-        data = pd.concat([data[column_names], data.iloc[:, column_numbers]], axis=1)
+        data = data[column_names]
     # distinct
     if criteria["DISTINCT"]:
         data = data.drop_duplicates()

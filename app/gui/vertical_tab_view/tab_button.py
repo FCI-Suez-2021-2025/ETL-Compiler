@@ -102,11 +102,19 @@ class TabButton(ctk.CTkFrame):
         )
         save_button.pack(pady=10)
 
+    def __truncate_title(self, title: str) -> str:
+        max_characters = 13
+        return (
+            title
+            if len(title) <= max_characters
+            else title[: max_characters - 3] + "..."
+        )
+
     def rename_tab(self, new_title: str, popup: ctk.CTkToplevel):
         self.title = new_title
-        self.tab_button.configure(text=new_title)
+        self.tab_button.configure(text=self.__truncate_title(new_title))
         popup.destroy()
 
     def update_title_and_text(self, new_title: str) -> None:
         self.title = new_title
-        self.tab_button.configure(text=new_title)
+        self.tab_button.configure(text=self.__truncate_title(new_title))

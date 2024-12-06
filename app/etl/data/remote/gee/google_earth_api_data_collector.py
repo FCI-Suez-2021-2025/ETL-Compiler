@@ -24,6 +24,10 @@ class GoogleEarthAPIDataCollector:
         )
         weather_df["temperature"] = df["temperature_2m"] - 273.15
         weather_df["soil_temperature"] = df["soil_temperature_level_1"] - 273.15
+        weather_df["season"] = weather_df["date"].apply(
+            calculator_instance.assign_season
+        )
+        weather_df["year"] = weather_df["date"].apply(calculator_instance.assign_year)
 
         # m/s meters per second
         weather_df["wind_speed"] = calculator_instance.calculate_wind_speed(

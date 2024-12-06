@@ -1,13 +1,13 @@
-import os
 from app import *
 from app.etl.controllers import *
 from app.gui.ui_compiler import UICompiler
 
-# for testing the program without ui
+
 if __name__ == "__main__":
     app = UICompiler()
     app.mainloop()
 
+## for testing the program without ui
 #     query = r"""
 # Select email,
 # [email 2],
