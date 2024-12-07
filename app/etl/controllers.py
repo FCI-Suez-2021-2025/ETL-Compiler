@@ -67,6 +67,7 @@ def execute_python_code(
                                    'COLUMNS': '__all__',
                                    'DISTINCT': False,
                                    'FILTER': None,
+                                   'GROUP': None,
                                    'ORDER': None,
                                    'LIMIT_OR_TAIL': ('limit', 10),
                                }
@@ -83,6 +84,7 @@ def execute_python_code(
                                    "COLUMNS": "__all__",
                                    "DISTINCT": False,
                                    "FILTER": {"type": "==", "left": "hotel", "right": "City Hotel"},
+                                   'GROUP': None,
                                    "ORDER": ("arrival_date_year", "ASC"),
                                    "LIMIT_OR_TAIL": ("limit", 10),
                                }
@@ -99,6 +101,7 @@ def execute_python_code(
                                    'COLUMNS': [0, 1, 2],
                                    'DISTINCT': False,
                                    'FILTER': None,
+                                   'GROUP': None,
                                    'ORDER': None,
                                    'LIMIT_OR_TAIL': None,
                                }

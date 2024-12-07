@@ -13,6 +13,7 @@ reserved = [
     "INSERT",
     "AND",
     "ORDER",
+    "GROUP", # new change
     "OR",
     "NOT",
     "DISTINCT",
@@ -109,6 +110,11 @@ def t_INTO(t):
 
 @TOKEN(r"order")
 def t_ORDER(t):
+    return t
+
+
+@TOKEN(r"group")
+def t_GROUP(t):
     return t
 
 

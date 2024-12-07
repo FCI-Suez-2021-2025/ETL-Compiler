@@ -37,7 +37,7 @@ def p_error(p):
 
 
 def p_select(p):
-    """select : SELECT distinct select_columns into_statement FROM DATASOURCE where order limit_or_tail SIMICOLON"""
+    """select : SELECT distinct select_columns into_statement FROM DATASOURCE where group order limit_or_tail SIMICOLON"""
     if type(p[3]) == str:
         p[3] = "'" + p[3] + "'"
 
@@ -54,8 +54,9 @@ def p_select(p):
         f"        'COLUMNS':  {p[3]},\n"
         f"        'DISTINCT': {p[2]},\n"
         f"        'FILTER':   {p[7]},\n"
-        f"        'ORDER':    {p[8]},\n"
-        f"        'LIMIT_OR_TAIL':    {p[9]},\n"
+        f"        'GROUP':    {p[8]},\n" # new change
+        f"        'ORDER':    {p[9]},\n" 
+        f"        'LIMIT_OR_TAIL':    {p[10]},\n"
         f"    }}\n"
         f")\n"
         f""
@@ -268,6 +269,28 @@ def p_way_asc(p):
 def p_way_desc(p):
     "way : DESC"
     p[0] = "desc"
+
+
+###########################
+# ======= Group by =========
+###########################
+
+
+def p_group(p):
+    """group : GROUP BY columns"""
+    p[0] = p[3]  # The list of columns to group by
+
+def p_group_empty(p):
+    "group : empty"
+    p[0] = None
+
+# def p_groub_columns(p):
+#     """columns : column
+#                | columns COMMA column"""
+#     if len(p) == 2:  # Single column
+#         p[0] = [p[1]]
+#     else:  # Multiple columns
+#         p[0] = p[1] + [p[3]]
 
 
 ###########################
