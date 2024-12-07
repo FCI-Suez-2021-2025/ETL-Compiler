@@ -13,7 +13,7 @@ reserved = [
     "INSERT",
     "AND",
     "ORDER",
-    "GROUP", # new change
+    "GROUP", 
     "OR",
     "NOT",
     "DISTINCT",
@@ -52,6 +52,7 @@ tokens = [
     "COMMA",
     "STRING",
     "PATTERN",
+    "AGGREGATION_FUNCTION",
 ] + reserved
 # t_SELECT=r"select"
 # t_WHERe=
@@ -72,6 +73,29 @@ t_SMALLER = r"<"
 t_SIMICOLON = r";"
 t_COMMA = r","
 
+# aggregation RE
+agg_functions = [
+    "sum",
+    "min",
+    "max",
+    "mean",
+    "median",
+    "count",
+    "std",
+    "var",
+    "prod",
+    "first",
+    "last",
+    "nunique",
+    "skew",
+    "kurt",
+    "quantile",
+]
+aggregation_re = (
+    f"({"|".join(agg_functions)})"
+    + r"\s*\(\s*(\[\d+\]|\[[_A-Za-z][ _A-Za-z0-9]*\]|([_A-Za-z])(([0-9])|([_A-Za-z]))*)\s*\)"
+)
+
 # ignored characters
 t_ignore = " \t"  # Spaces and tabs
 t_ignore_COMMENT = r"/\*.*\*/"  # Comment
@@ -85,6 +109,11 @@ simple_identifier = r"(" + nondigit + r"(" + digit + r"|" + nondigit + r")*)"
 
 # the next line is commented to not include [column number]
 # simple_identifier = simple_identifier + r"|" + r"\[" + digit + r"+\]"
+
+# aggregation token
+@TOKEN(r"aggregation_re")
+def t_AGGREGATION_FUNCTION(t):
+    return t
 
 
 # region this code to not conflict with SIMPE_COLNAME
